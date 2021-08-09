@@ -66,12 +66,14 @@ def b_create(request):
 
 
 def b_detail(request, board_id):
+    user_id = request.session.get('user')
     post = get_object_or_404(Board, pk=board_id)
     comment_form = CommentForm()
     comments = post.comment_set.all().order_by('-id')
     context = {
         'post': post,
-        'comment_form': comment_form
+        'comment_form': comment_form,
+        'user': user_id
     }
     return render(request, 'getaway/detail.html', context)
 
@@ -102,11 +104,14 @@ def b_like(request, board_id):
     """
     좋아요 (추천) 기능 view 함수
     """
+    user_id = request.session.get('user')
     post = get_object_or_404(Board, pk=board_id)
-    if request.user == post.b_user:
+    if user_id is None:
+        messages.error(request, '로그인한 유저만 좋아요를 누를 수 있습니다.')
+    elif user_id == post.b_user.id:
         messages.error(request, '본인이 작성한 글은 추천할수 없습니다')
     else:
-        post.b_voter.add(request.user)
+        post.b_voter.add(User.objects.get(pk=user_id))
     return redirect('getaway:b_detail', board_id)
 
 
