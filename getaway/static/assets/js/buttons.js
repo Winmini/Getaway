@@ -40,11 +40,6 @@ $(function(event) {
     //         location.href = $(this).attr('data-uri');
     //     }
     // });
-
-    // 테스트
-    $("#test").on('click', function(event) {
-        console.log('test works!!!')
-    });
 });
 
 //
