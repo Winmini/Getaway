@@ -21,6 +21,10 @@ let area_key = {'서울': '1', '인천': '2', '대전': '3', '대구': '4', '광
 
 $(function (){
     // 선택지 초기화
+    let serviceKey = 'lA29%2FannvhdQHnNE4mon7ZoyNq0ue6P%2FPnYQuFsfaZ7D8YedR6DOISotomyacj0u15iLaCeruqZUsGe%2F79DpRA%3D%3D';
+//    let serviceKey = 'rE%2BzSIwPU%2FdmQTVNnIRGBCcv6FWXOyrTEKBJFzviUwqs53ZPdiXDrDai8Cmc946Hzp0e0IK19jC7l5FS61TFBw%3D%3D';
+//    let serviceKey =
+
     let area_select = $('#area_select');
     let detail_select = $('#detail_select');
 
@@ -30,14 +34,18 @@ $(function (){
     whole_area['서울'].forEach((value, index, array) => {
         detail_select.append($('<option value="' + value + '"></option>').text(value));
     })
+    let pageNo = 1;
     let selected = $('#area_select option:selected')
     let areaCode = area_key[selected.val()];
     let sigunguCode = whole_area[selected.val()].indexOf($('#detail_select option:selected').val()) + 1;
-    bring_tour_with_areaCode(areaCode, sigunguCode);
-    // 초기화 끝
+    bring_tour_with_areaCode(areaCode, sigunguCode, pageNo, serviceKey);
 
-    // 변경 메서드
+
+
     area_select.on('change', function (event) {
+        $('html').scrollTop(0);
+        pageNo = 1;
+        $('.posts').empty();
         selected = $('#area_select option:selected');
         detail_select.empty();
         whole_area[$('#area_select option:selected').val()].forEach((value, index, array) => {
@@ -45,36 +53,38 @@ $(function (){
         })
         areaCode = area_key[selected.val()];
         sigunguCode = whole_area[selected.val()].indexOf($('#detail_select option:selected').val()) + 1;
-        bring_tour_with_areaCode(areaCode, sigunguCode);
+        bring_tour_with_areaCode(areaCode, sigunguCode, pageNo, serviceKey);
     })
+
     detail_select.on('change',function (event){
+        $('html').scrollTop(0);
+        pageNo = 1;
+        $('.posts').empty();
         selected = $('#area_select option:selected');
         areaCode = area_key[selected.val()];
         sigunguCode = whole_area[selected.val()].indexOf($('#detail_select option:selected').val()) + 1;
-        bring_tour_with_areaCode(areaCode, sigunguCode);
-
+        bring_tour_with_areaCode(areaCode, sigunguCode, pageNo, serviceKey);
     })
-
-
 })
 
 
-function bring_tour_with_areaCode(areaCode, sigunguCode){
+function bring_tour_with_areaCode(areaCode, sigunguCode, pageNo, serviceKey){
     let xhr = new XMLHttpRequest();
     let url ='http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList';
-    let queryParams = '?' + encodeURIComponent('ServiceKey') + '=' + 'lA29%2FannvhdQHnNE4mon7ZoyNq0ue6P%2FPnYQuFsfaZ7D8YedR6DOISotomyacj0u15iLaCeruqZUsGe%2F79DpRA%3D%3D';
+    let queryParams = '?' + encodeURIComponent('ServiceKey') + '=' + serviceKey;
     queryParams += '&' + encodeURIComponent('MobileOS') + '=' + 'ETC';
     queryParams += '&' + encodeURIComponent('MobileApp') + '=' + 'AppTest';
     queryParams += '&' + encodeURIComponent('areaCode') + '=' + areaCode;
     queryParams += '&' + encodeURIComponent('sigunguCode') + '=' + sigunguCode;
     queryParams += '&' + encodeURIComponent('numOfRows') + '=' + '100';
+    queryParams += '&' + encodeURIComponent('pageNo') + '=' + pageNo;
     queryParams += '&' + encodeURIComponent('contentTypeId') + '=' + '12';
     queryParams += '&' + encodeURIComponent('overviewYN') + '=' + 'Y';
     xhr.open('GET', url + queryParams);
     xhr.onreadystatechange = function (){
         if(this.readyState == 4){
-            $('.posts').empty();
             $(this.responseText).find('item').each(function(index, item){
+                console.log($(this.responseText))
                 let post = $('.posts');
                 let article = $('<article></article>');
                 let image_add = $($(item).find('firstimage')[0]).text();
@@ -90,7 +100,7 @@ function bring_tour_with_areaCode(areaCode, sigunguCode){
                 let contentId = $($(item).find('contentid')[0]).text();
                 console.log(contentId);
                 bring_tour_detail(article, contentId);
-
+                pageNo++;
             })
         }
     }
@@ -98,10 +108,10 @@ function bring_tour_with_areaCode(areaCode, sigunguCode){
 }
 
 
-function bring_tour_detail(article, contentId){
+function bring_tour_detail(article, contentId, serviceKey){
     let xhr = new XMLHttpRequest();
     let url ='http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon';
-    let queryParams = '?' + encodeURIComponent('ServiceKey') + '=' + 'lA29%2FannvhdQHnNE4mon7ZoyNq0ue6P%2FPnYQuFsfaZ7D8YedR6DOISotomyacj0u15iLaCeruqZUsGe%2F79DpRA%3D%3D';
+    let queryParams = '?' + encodeURIComponent('ServiceKey') + '=' + serviceKey;
     queryParams += '&' + encodeURIComponent('MobileOS') + '=' + 'ETC';
     queryParams += '&' + encodeURIComponent('MobileApp') + '=' + 'AppTest';
     queryParams += '&' + encodeURIComponent('contentId') + '=' + contentId;
