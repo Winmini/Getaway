@@ -27,8 +27,12 @@
 {#                            {% if user.is_authentecated %}#}
                                 <div class="logout_div">
                                     <ul class="underline-hover">
+                                        {% if user != None %}
                                         <li class="logout_text"><a href="{% url 'getaway:logout' %}"><span>로그아웃</span></a></li>
+                                        {% else %}
                                         <li class="logout_text"><a href="{% url 'getaway:login' %}"><span>로그인</span></a></li>
+                                        {% endif %}
+
                                     </ul>
                                 </div>
 {#                            {% else %}#}
