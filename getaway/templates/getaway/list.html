@@ -70,12 +70,13 @@
                                 <div class="col-12">
                                     <ul class="actions">
                                         <li>
-                                            <a href="{% url 'getaway:b_create' %}">
+                                            {% if not post.b_user %}
                                                 <button type="button"
                                                         style="font-family: SansSerif"
                                                         id="new_posting_btn"
                                                         class="primary">글쓰기</button>
-                                            </a>
+
+                                            {% endif %}
                                         </li>
                                     </ul>
                                 </div>
