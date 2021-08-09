@@ -19,6 +19,8 @@ def b_list(request):
     게시판 리스트 출력 함수
     """
     # 입력 파라미터
+    user_id = request.session.get('user')
+    print(user_id)
     page = request.GET.get('page', 1)  # 페이지
     kw = request.GET.get('kw', '')  # 검색어 for search function
     # 조회
@@ -34,7 +36,7 @@ def b_list(request):
     paginator = Paginator(listing, 10)  # 페이지당 10개씩 보여주기
     page_obj = paginator.get_page(page)
     # 검색 기능 넣고 Page and kw are included
-    context = {'listing': page_obj, 'page': page, 'kw': kw}
+    context = {'listing': page_obj, 'page': page, 'kw': kw, 'user': user_id}
     return render(request, 'getaway/list.html', context)
 
 
@@ -45,7 +47,7 @@ def b_create(request):
     if request.method == 'POST':
         b_title = request.POST['b_title']
         b_content = request.POST['b_content']
-        b_user = request.user
+        b_user = User.objects.get(pk=request.session.get('user'))
         new_post = Board(
             b_title=b_title,
             b_content=b_content,
@@ -111,37 +113,53 @@ def b_like(request, board_id):
 # ----------------------------- 로긴
 def signup(request):
     if request.method == 'POST':
-        if request.POST['password1'] == request.POST['password2']:
+        email = request.POST.get('email', None)
+        username = request.POST.get('username', None)
+        password = request.POST.get('password1', None)
+        re_password = request.POST.get('password2', None)
+        if not (email and username and password and re_password):
+            error = '모든 값을 입력해야 합니다.'
+        elif password != re_password:
+            error = '비밀번호가 일치하지 않습니다.'
+        else:
             user = User.objects.create_user(
-                                            username=request.POST['username'],
-                                            password=request.POST['password1'],
-                                            email=request.POST['email'],)
-            auth.login(request, user)
-            return redirect('getaway:b_list')
+                username=request.POST['username'],
+                password=request.POST['password1'],
+                email=request.POST['email'],
+                )
+            user.save()
+        return render(request, 'getaway/list.html', {})
+
+    if request.method == 'GET':
         return render(request, 'getaway/signup.html')
-    return render(request, 'getaway/signup.html')
 
 
 def login(request):
-    # 로그인 버튼 누르면 로그인 페이지로
     if request.method == 'GET':
         return render(request, 'getaway/login.html')
-    # 로그인 기능
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            auth.login(request, user)
-            return redirect('getaway:b_list')
+    elif request.method == 'POST':
+        username = request.POST.get('username', None)
+        password = request.POST.get('password', None)
+        if not (username and password):
+            error = '모든 값을 입력해야 합니다.'
         else:
-            return render(request, 'getaway/login.html', {'error': '아이디 또는 비밀번호가 일치하지 않습니다.'})
-    return render(request, 'getaway/list.html')
+            try:
+                user = User.objects.get(username=username)
+            except User.DoesNotExist:
+                error = '아이디가 존재하지 않습니다.'
+            else:
+                if check_password(password, user.password):
+                    request.session['user'] = user.id
+                    return redirect('getaway:b_list')  # 메인페이지
+                else:
+                    error = '비밀번호가 틀렸습니다.'
+        return render(request, 'getaway/login.html', {'error': error})
 
 
 def logout(request):
-    auth.logout(request)
-    return redirect('getaway:home')
+    if request.session.get('user'):
+        del (request.session['user'])
+    return redirect('getaway:b_list')
 
 
 def home(request):
