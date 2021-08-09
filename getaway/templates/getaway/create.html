@@ -1,0 +1,67 @@
+{% load bootstrap4 %}
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+	<head>
+		<title>GETAWAY</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../../static/assets/css/main.css" />
+	</head>
+
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+        <div id="wrapper">
+            <!-- Main -->
+            <div id="main">
+                <div class="inner">
+                    <!-- Header -->
+                    <header id="header">
+                        <a href="{% url 'getaway:home' %}" class="logo"><strong>GETAWAY</strong> with BUDDY</a>
+                    </header>
+                    <!-- Banner -->
+                    <section id="banner" >
+                        <div class="content">
+                            <form method="post">
+
+                                {% csrf_token %}
+                                {% bootstrap_form board_form %}
+                                <br><br>
+
+                                <div class="row gtr-uniform" style="float: right;">
+                                    <div class="col-6 l">
+                                         <button type="submit"
+                                                 class="button"
+                                                 style="font-family: SansSerif">등록</button>
+                                    </div>
+                                    <div class="col-6 col-12-xsmall">
+                                        <a href="{% url 'getaway:b_list' %}">
+                                            <button type="button"
+                                                    class="button primary"
+                                                    style="font-family: SansSerif">취소</button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+		<!-- Scripts -->
+        <script src="../../static/assets/js/jquery.min.js"></script>
+        <script src="../../static/assets/js/browser.min.js"></script>
+        <script src="../../static/assets/js/breakpoints.min.js"></script>
+        <script src="../../static/assets/js/util.js"></script>
+        <script src="../../static/assets/js/main.js"></script>
+        <script src="../../static/assets/js/data.js"></script>
+
+	</body>
+</html>

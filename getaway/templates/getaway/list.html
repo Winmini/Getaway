@@ -1,0 +1,225 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>GETAWAY Board</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../../static/assets/css/main.css" />
+	</head>
+
+	<body class="is-preload">
+		<!-- Wrapper -->
+        <div id="wrapper">
+        <!-- Main -->
+            <div id="main">
+                <div class="inner">
+
+                    <!-- Header -->
+                    <header id="header">
+                        <a href="{% url 'getaway:home' %}" class="logo"><strong>GETAWAY</strong> with BUDDY</a>
+                        <ul class="icons">
+{#                            views.py에서 user 데이터 불러 올 수 있으면 로그인/로그아웃 상태 확인 가능#}
+{#                            {% if user.is_authentecated %}#}
+                                <div class="logout_div">
+                                    <ul class="underline-hover">
+                                        <li class="logout_text"><a href="{% url 'getaway:logout' %}"><span>로그아웃</span></a></li>
+                                        <li class="logout_text"><a href="{% url 'getaway:login' %}"><span>로그인</span></a></li>
+                                    </ul>
+                                </div>
+{#                            {% else %}#}
+{#                                <div class="logout_div">#}
+{#                                    <ul class="underline-hover">#}
+{#                                        <li class="logout_text"><a href="{% url 'getaway:login' %}"><span>로그인</span></a></li>#}
+{#                                    </ul>#}
+{#                                </div>#}
+{#                            {% endif %}#}
+                        </ul>
+                    </header>
+
+                    <section>
+                        <header class="main">
+                            <h1 style="font-family: SansSerif">자유게시판</h1>
+                        </header>
+<!-- 자유게시판 내용 채우기 -->
+                        <h2 style="font-family: SansSerif">공지사항</h2>
+                        <blockquote>Dear. 현주,  코멘트 스트레스가 상당하네요...</blockquote>
+<!-- 검색 버튼, <script> js 파일 연동은 <body> 하단에 있음 ----------------------------------------------------------------->
+                        <div>
+                            <div class="row gtr-uniform" style="float: left; width: 50%;">
+                                <div class="col-6 l">
+                                     <input type="text"
+                                            class="form-control kw"
+                                            style="font-family: SansSerif"
+                                            value="{{ kw|default_if_none:'' }}">
+                                </div>
+                                <div class="col-6 col-12-xsmall">
+                                    <button class="btn btn-outline-secondary"
+                                            type="button"
+                                            style="font-family: SansSerif"
+                                            id="btn_search">검색</button>
+                                </div>
+                            </div>
+<!-- 새 글 작성 버튼 ---------------------------------------------------------------------------------------------------->
+<!-- url 새 글로 넘어가는데 buttons.js 도 url 넘기는 기능만 있는듯...? -->
+                            <div class="row gtr-uniform" style="float: right">
+                                <div class="col-12">
+                                    <ul class="actions">
+                                        <li>
+                                            <a href="{% url 'getaway:b_create' %}">
+                                                <button type="button"
+                                                        style="font-family: SansSerif"
+                                                        id="new_posting_btn"
+                                                        class="primary">글쓰기</button>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <br><br><br>
+<!--게시글 목록 --------------------------------------------------------------------------------------------------------->
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">제목</th>
+                                        <th scope="col">작성자</th>
+                                        <th scope="col">작성일</th>
+                                        <th scope="col">댓글수</th>
+                                        <th scope="col">좋아요</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for post in listing %}
+                                        <tr>
+                                            <th scope="row">{{ post.id }}</th>
+                                            <td><a href="{% url 'getaway:b_detail' post.id %}"> {{ post.b_title }}</a></td>
+                                            <td>{{ post.b_user }}</td>
+                                            <td>{{ post.b_pubdate | date:"Y/m/d" }}</td>
+                                            <td>{{ post.b_comment }}</td>
+                                            <td>{{ post.b_voter.count }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+<!-- 페이징 기능 -------------------------------------------------------------------------------------------------------->
+                            <ul class="pagination justify-content-center">
+<!------------------------------ 페이징 : 이전페이지 -->
+                                {% if listing.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link"
+                                           data-page="{{ listing.previous_page_number }}"
+                                           href="?page={{ listing.previous_page_number }}">이전</a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item disabled">
+                                        <a class="page-link"
+                                           tabindex="-1"
+                                           aria-disabled="true"
+                                           href="#">이전</a>
+                                    </li>
+                                {% endif %}
+<!------------------------------ 페이징 : 페이지 리스트 -->
+                                {% for page_number in listing.paginator.page_range %}
+                                    {% if page_number == listing.number %}
+                                        <li class="page-item active" aria-current="page">
+                                            <a class="page-link"
+                                               data-page="{{ page_number }}"
+                                               href="?page={{ page_number }}">{{ page_number }}</a>
+                                        </li>
+                                    {% else %}
+                                        <li class="page-item">
+                                            <a class="page-link"
+                                               data-page="{{ page_number }}"
+                                               href="?page={{ page_number }}">{{ page_number }}</a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+<!------------------------------ 페이징 : 다음페이지 -->
+                                {% if listing.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link"
+                                           data-page="{{ question_list.next_page_number }}"
+                                           href="?page={{ listing.next_page_number }}">다음</a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item disabled">
+                                        <a class="page-link"
+                                           tabindex="-1"
+                                           aria-disabled="true"
+                                           href="#">다음</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+<!---------------------- 페이징 : 페이지 버튼 -->
+                        <form id="searchForm" method="get" action="{% url 'getaway:b_list' %}">
+                            <input type="hidden" id="kw" name="kw" value="{{ kw|default_if_none:'' }}">
+                            <input type="hidden" id="page" name="page" value="{{ page }}">
+                        </form>
+                    </section>
+                </div>
+            </div>
+<!-- Sidebar ---------------------------------------------------------------------------------------------------------->
+            <div id="sidebar">
+                <div class="inner">
+                    <!-- Search -->
+                    <section id="search" class="alt">
+                        <form method="post" action="#">
+                            <input type="text" name="query" id="query" placeholder="Search" />
+                        </form>
+                    </section>
+                    <!-- Menu -->
+                    <nav id="menu">
+                        <header class="major">
+                            <h2>Menu</h2>
+                        </header>
+                        <ul>
+                            <li><a href="{% url 'getaway:home' %}">Mainpage</a></li>
+                            <li><a href="{% url 'getaway:home' %}" style="font-family: SansSerif">상세페이지?</a></li>
+                            <li><a href="{% url 'getaway:b_list' %}" style="font-family: SansSerif">자유게시판</a></li>
+                            <li>
+                                <span class="opener">Submenu</span>
+                                <ul>
+                                    <li><a href="#">Lorem Dolor</a></li>
+                                    <li><a href="#">Ipsum Adipiscing</a></li>
+                                    <li><a href="#">Tempus Magna</a></li>
+                                    <li><a href="#">Feugiat Veroeros</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                    <!-- Section -->
+                    <section>
+                        <header class="major">
+                            <h2>Get in touch</h2>
+                        </header>
+                        <p>Sed varius enim lorem ullamcorper dolore aliquam aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin sed aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+                        <ul class="contact">
+                            <li class="icon solid fa-envelope"><a href="#">information@untitled.tld</a></li>
+                            <li class="icon solid fa-phone">(000) 000-0000</li>
+                            <li class="icon solid fa-home">1234 Somewhere Road #8254<br />
+                            Nashville, TN 00000-0000</li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+		<!-- Scripts -->
+        <script src="../../static/assets/js/jquery.min.js"></script>
+        <script src="../../static/assets/js/browser.min.js"></script>
+        <script src="../../static/assets/js/breakpoints.min.js"></script>
+        <script src="../../static/assets/js/util.js"></script>
+        <script src="../../static/assets/js/main.js"></script>
+        <script src="../../static/assets/js/data.js"></script>
+        <script src="../../static/assets/js/buttons.js"></script>
+
+	</body>
+</html>

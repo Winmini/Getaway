@@ -1,0 +1,194 @@
+{% load bootstrap4 %}
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>GETAWAY</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../../static/assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+        <div id="wrapper">
+
+            <!-- Main -->
+            <div id="main">
+                <div class="inner">
+
+                    <!-- Header -->
+                    <header id="header">
+                        <a href="{% url 'getaway:home' %}" class="logo"><strong>GETAWAY</strong> with BUDDY</a>
+                    </header>
+                    <br>
+                <div>
+<!-- 게시글 제목, 목록으로 버튼 =------------------------------------------------------------------------------------------>
+                    <a href="{% url 'getaway:b_list' %}" style="float: right">
+                        <button type="button" class="button" style="font-family: SansSerif"> 목록으로 </button>
+                    </a>
+                    <h1 style="font-family: SansSerif;">{{ post.b_title }}</h1>
+                </div>
+                    <!-- Banner -->
+                    <div class="content">
+<!-- 게시글 내용 -------------------------------------------------------------------------------------------------------->
+                        <div class="box">
+                            <p class="card-text"></p>
+                            <p class="card-text">글 번호 : {{ post.id }}<br>
+                                                 작성자 : {{ post.b_user }}<br>
+                                                 작성일 : {{ post.b_pubdate | date:"Y년 m월 d일 h:m" }}</p>
+                            <hr>
+                            <h3 style="font-family: SansSerif">{{ post.b_content }}</h3>
+<!------------------------- 좋아요/수정/삭제 버튼 -->
+                            <div class="col-1">
+                                <a href="{% url 'getaway:b_like' post.id %}"
+                                   data-uri="{% url 'getaway:b_detail' post.id  %}">
+                                    <button type="button"
+                                            class="primary"
+                                            style="font-family: SansSerif">좋아요 {{post.b_voter.count}}</button>
+                                </a>
+                                <div style="float: right">
+                                    <form action="" method="post">
+                                        {% csrf_token %}
+                                        {% if request.user == post.b_user %}
+                                            <a href="{% url 'getaway:b_modify' post.id %}">
+                                                <button id="mod_btn"
+                                                        type="button"
+                                                        class="button"
+                                                        style="font-family: SansSerif"> 수정 </button>
+                                            </a>
+                                            <button type="button"
+                                                    class="primary"
+                                                    style="font-family: SansSerif"
+                                                    onclick="location.href='{% url 'getaway:b_remove' post.id %}'">삭제</button>
+                                        {% endif %}
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+<!-- 코멘트를 한 번 넣어보자 ---------------------------------------------------------------------------------------------->
+                        <div class="container">
+
+                                <h3 style="font-family: SansSerif">댓글</h3>
+{#                                <div>#}
+{#                                    {% comment %}댓글 생성 url {% endcomment %}#}
+{#                                    <form action="" method="post">#}
+{#                                        {% csrf_token %}#}
+{#                                        {% bootstrap_form comment_form %}#}
+{#                                    <label for="c_name">작성자</label>#}
+{#                                    <input type="text"#}
+{#                                           class="form-control"#}
+{#                                           id="c_name"#}
+{#                                           value="{{ post.b_user }}"#}
+{#                                           readonly="readonly">#}
+{#                                    <label for="c_content">내용</label>#}
+{#                                    <input type="text"#}
+{#                                           class="form-control"#}
+{#                                           id="c_content"#}
+{#                                           name="c_content">#}
+{#                                    <br>#}
+{#                                    <input type="submit"#}
+{#                                            class="btn btn-info"#}
+{#                                            id="comment_create_btn"#}
+{#                                            value="등록">#}
+{#                                    </form>#}
+{#                                </div>#}
+                                <table class="table table-hover">
+                                    <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">댓글</th>
+                                        <th scope="col">삭제</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="comment_body">
+                                    {% for comment in post.comment_set.all %}
+                                        <tr>
+                                            <td>{{ comment.c_user }}<br>{{ comment.c_content }}</td>
+                                            <td>
+                                                <button type="button"
+                                                        class="btn btn-danger"
+                                                        data-comment_id="{{ comment.id }}"
+                                                        id="comment_delete_btn">삭제</button>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                        </div>
+                        <br><br><br>
+                    </div>
+                </div>
+            </div>
+
+<!-- Sidebar ---------------------------------------------------------------------------------------------------------->
+            <div id="sidebar">
+                <div class="inner">
+                    <!-- Search -->
+                    <section id="search" class="alt">
+                        <form method="post" action="#">
+                            <input type="text" name="query" id="query" placeholder="Search" />
+                        </form>
+                    </section>
+                    <!-- Menu -->
+                    <nav id="menu">
+                        <header class="major">
+                            <h2>Menu</h2>
+                        </header>
+                        <ul>
+                            <li><a href="{% url 'getaway:home' %}" style="font-family: SansSerif">Mainpage</a></li>
+                            <li><a href="{% url 'getaway:home' %}" style="font-family: SansSerif">상세페이지?</a></li>
+                            <li><a href="{% url 'getaway:b_list' %}" style="font-family: SansSerif">자유게시판</a></li>
+                            <li>
+                                <span class="opener">Submenu</span>
+                                <ul>
+                                    <li><a href="#">Lorem Dolor</a></li>
+                                    <li><a href="#">Ipsum Adipiscing</a></li>
+                                    <li><a href="#">Tempus Magna</a></li>
+                                    <li><a href="#">Feugiat Veroeros</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                    <!-- Section -->
+                    <section>
+                        <header class="major">
+                            <h2>Get in touch</h2>
+                        </header>
+                        <p>Sed varius enim lorem ullamcorper dolore aliquam aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin sed aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+                        <ul class="contact">
+                            <li class="icon solid fa-envelope"><a href="#">information@untitled.tld</a></li>
+                            <li class="icon solid fa-phone">(000) 000-0000</li>
+                            <li class="icon solid fa-home">1234 Somewhere Road #8254<br />
+                            Nashville, TN 00000-0000</li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+		<!-- Scripts -->
+        <script src="../../static/assets/js/jquery.min.js"></script>
+        <script src="../../static/assets/js/browser.min.js"></script>
+        <script src="../../static/assets/js/breakpoints.min.js"></script>
+        <script src="../../static/assets/js/util.js"></script>
+        <script src="../../static/assets/js/main.js"></script>
+        <script src="../../static/assets/js/data.js"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function(){
+                // 추천 기능
+                $(".recommend").on('click', function() {
+                    if(confirm("정말로 추천하시겠습니까?")) {
+                        location.href = $(this).data('uri');
+                    }
+                });
+            });
+        </script>
+
+	</body>
+</html>
