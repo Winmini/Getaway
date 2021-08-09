@@ -133,7 +133,7 @@ def signup(request):
                 email=request.POST['email'],
                 )
             user.save()
-        return redirect('getaway:home')
+        return render(request, 'getaway/signupcomplete.html')
 
     if request.method == 'GET':
         return render(request, 'getaway/signup.html')
