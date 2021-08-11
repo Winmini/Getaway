@@ -96,7 +96,7 @@
                                         <th scope="col">제목</th>
                                         <th scope="col">작성자</th>
                                         <th scope="col">작성일</th>
-                                        <th scope="col">댓글수</th>
+{#                                        <th scope="col">댓글수</th>#}
                                         <th scope="col">좋아요</th>
                                     </tr>
                                 </thead>
@@ -104,10 +104,10 @@
                                     {% for post in listing %}
                                         <tr>
                                             <th scope="row">{{ post.id }}</th>
-                                            <td><a href="{% url 'getaway:b_detail' post.id %}"> {{ post.b_title }}</a></td>
+                                            <td><a href="{% url 'getaway:b_detail' post.id %}"> {{ post.b_title }}    ({{ post.b_comment }})</a></td>
                                             <td>{{ post.b_user }}</td>
                                             <td>{{ post.b_pubdate | date:"Y/m/d" }}</td>
-                                            <td>{{ post.b_comment }}</td>
+{#                                            <td>{{ post.b_comment }}</td>#}
                                             <td>{{ post.b_voter.count }}</td>
                                         </tr>
                                     {% endfor %}
