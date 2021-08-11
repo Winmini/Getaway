@@ -1,17 +1,14 @@
 from django.contrib.auth.hashers import check_password
+from django.core.serializers import serialize
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import *
+from django.views.decorators.csrf import csrf_exempt
 from .forms import *
 from django.core.paginator import Paginator
 from django.db.models import Q  # for search function
 from django.contrib import auth, messages
-from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse
 import json
-from django.utils import timezone
-from django.core import serializers
-from django.core.serializers.json import DjangoJSONEncoder
 
 
 def b_list(request):
@@ -65,17 +62,49 @@ def b_create(request):
         return render(request, 'getaway/create.html', context)
 
 
+@csrf_exempt
 def b_detail(request, board_id):
-    user_id = request.session.get('user')
-    post = get_object_or_404(Board, pk=board_id)
-    comment_form = CommentForm()
-    comments = post.comment_set.all().order_by('-id')
-    context = {
-        'post': post,
-        'comment_form': comment_form,
-        'user': user_id
-    }
-    return render(request, 'getaway/detail.html', context)
+    if request.method == 'POST':
+        if request.POST.get('what') == 'write_comment':
+            print(request.POST.get('writer'))
+            print(request.POST.get('content'))
+            n_c_user = User.objects.get(pk=request.POST.get('writer'))
+            n_c_content = request.POST.get('content')
+            board = Board.objects.get(pk=request.POST['id'])
+            new_comment = Comment(
+                c_user=n_c_user,
+                c_content=n_c_content,
+                c_board=board
+            )
+            new_comment.save()
+            comment = Comment.objects.select_related('c_board').filter(c_board_id=request.POST.get('id')).order_by('-c_pubdate')
+            writer = n_c_user.username
+            comment_data = json.loads(serialize('json', comment))
+            return JsonResponse({'comment': comment_data, 'writer': writer})
+        elif request.POST.get('what') == 'comment_bring':
+            comment = Comment.objects.select_related('c_board').filter(c_board_id=request.POST.get('id')).order_by('-c_pubdate')
+            comment_data = json.loads(serialize('json', comment))
+            username_data = {}
+            for username in comment_data:
+                username_data[username['fields']['c_user']] = User.objects.get(pk=username['fields']['c_user']).username
+            return JsonResponse({'comment': comment_data, 'username': username_data})
+        elif request.POST.get('what') == 'comment_delete':
+            d_comment = Comment.objects.get(pk=request.POST['id'])
+            d_comment.delete()
+            comment = Comment.objects.select_related('c_board').filter(c_board=request.POST.get('board_id')).order_by('-c_pubdate')
+            comment_data = json.loads(serialize('json', comment))
+            return JsonResponse({'comment': comment_data})
+
+    if request.method == 'GET':
+        user_id = request.session.get('user')
+        post = get_object_or_404(Board, pk=board_id)
+        comment_form = CommentForm()
+        context = {
+            'post': post,
+            'comment_form': comment_form,
+            'user': user_id
+        }
+        return render(request, 'getaway/detail.html', context)
 
 
 def b_modify(request, board_id):
@@ -83,7 +112,7 @@ def b_modify(request, board_id):
     if request.method == 'POST':
         post.b_title = request.POST['title']
         post.b_content = request.POST['content']
-        post.b_user = request.user
+        post.b_user = User.objects.get(pk=request.session.get('user'))
         post.b_pubdate = request.POST['pubdate']
         post.save()
         return redirect('getaway:b_detail', board_id=post.id)
@@ -118,6 +147,7 @@ def b_like(request, board_id):
 # ----------------------------- 로긴
 def signup(request):
     if request.method == 'POST':
+        error = {}
         email = request.POST.get('email', None)
         username = request.POST.get('username', None)
         password = request.POST.get('password1', None)
@@ -133,7 +163,9 @@ def signup(request):
                 email=request.POST['email'],
                 )
             user.save()
+
         return render(request, 'getaway/signupcomplete.html')
+
 
     if request.method == 'GET':
         return render(request, 'getaway/signup.html')
