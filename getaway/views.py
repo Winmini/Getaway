@@ -93,6 +93,7 @@ def b_detail(request, board_id):
         elif request.POST.get('what') == 'comment_delete':
             d_comment = Comment.objects.get(pk=request.POST.get('id'))
             d_comment.delete()
+            Board.objects.get(pk=request.POST.get('board_id')).b_comment -= 1
             comment = Comment.objects.select_related('c_board').filter(c_board=request.POST.get('board_id')).order_by('-c_pubdate')
             comment_data = json.loads(serialize('json', comment))
             return JsonResponse({'comment': comment_data})
