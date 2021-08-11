@@ -67,44 +67,46 @@
         <!-- Sidebar -->
             <div id="sidebar">
                 <div class="inner">
-                    <!-- Search -->
-                    <section id="search" class="alt">
-                        <form method="post" action="#">
-                            <input type="text" name="query" id="query" placeholder="Search" />
-                        </form>
-                    </section>
                     <!-- Menu -->
+                    <br><br><br>
                     <nav id="menu">
                         <header class="major">
                             <h2>Menu</h2>
                         </header>
                         <ul>
-                            <li><a href="{% url 'getaway:home' %}">Mainpage</a></li>
-                            <li><a href="{% url 'getaway:home' %}">상세페이지?</a></li>
-                            <li><a href="{% url 'getaway:b_list' %}">자유게시판</a></li>
-                            <li>
-                                <span class="opener">Submenu</span>
-                                <ul>
-                                    <li><a href="#">Lorem Dolor</a></li>
-                                    <li><a href="#">Ipsum Adipiscing</a></li>
-                                    <li><a href="#">Tempus Magna</a></li>
-                                    <li><a href="#">Feugiat Veroeros</a></li>
-                                </ul>
-                            </li>
+                            <li><a href="{% url 'getaway:home' %}" style="font-family: SansSerif">메인페이지</a></li>
+                            <li><a href="{% url 'getaway:b_list' %}" style="font-family: SansSerif">자유게시판</a></li>
                         </ul>
                     </nav>
                     <!-- Section -->
                     <section>
                         <header class="major">
-                            <h2>Get in touch</h2>
+                            <h2>Who made this?</h2>
                         </header>
-                        <p>Sed varius enim lorem ullamcorper dolore aliquam aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin sed aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-                        <ul class="contact">
-                            <li class="icon solid fa-envelope"><a href="#">information@untitled.tld</a></li>
-                            <li class="icon solid fa-phone">(000) 000-0000</li>
-                            <li class="icon solid fa-home">1234 Somewhere Road #8254<br />
-                            Nashville, TN 00000-0000</li>
-                        </ul>
+                        <article>
+                            <a href="#" class="image">
+                                <img src="../../static/images/park.png" style="width: 70%; height: 70%">
+                            </a>
+                            <p>github : Lewis911</p>
+                        </article>
+                        <article>
+                            <a href="#" class="image">
+                                <img src="../../static/images/ban.png" style="width: 70%; height: 70%">
+                            </a>
+                            <p>github : Rphabet</p>
+                        </article>
+                        <article>
+                            <a href="#" class="image">
+                                <img src="../../static/images/lee.png" style="width: 70%; height: 70%">
+                            </a>
+                            <p>github : 01stone</p>
+                        </article>
+                        <article>
+                            <a href="#" class="image">
+                                <img src="../../static/images/lim.png" style="width: 70%; height: 70%">
+                            </a>
+                            <p>github : Winmini</p>
+                        </article>
                     </section>
                 </div>
             </div>
