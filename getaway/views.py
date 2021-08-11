@@ -163,7 +163,9 @@ def signup(request):
                 email=request.POST['email'],
                 )
             user.save()
-        return render(request, 'getaway/list.html', {'error': error})
+
+        return render(request, 'getaway/signupcomplete.html')
+
 
     if request.method == 'GET':
         return render(request, 'getaway/signup.html')

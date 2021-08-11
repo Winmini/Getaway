@@ -1,4 +1,9 @@
 $(function(event) {
+    // main 페이지로 돌아가는 버튼
+    $('.go_home').on('click', function(event) {
+        document.location.href = 'http://localhost:8000/'
+    });
+
     // 새글쓰기 기능
     $('#new_posting_btn').on('click', function(event) {
         document.location.href = '/list/create/'
