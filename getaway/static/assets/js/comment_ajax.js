@@ -11,7 +11,13 @@ $(function(event){
                 let t_list = $('#c_list');
                 let c_list = $('<div class="box"></div>');
                 t_list.append(c_list);
-                let c_writer = $('<h4 style="font-family: SansSerif">' + data.username[item.fields.c_user] +'</h4>');
+                let c_writer
+                if(data.username[item.fields.c_user] == $('#t_name').text()){
+                    c_writer = $('<h4 style="font-family: SansSerif; color: red"> 글쓴이 </h4>');
+                }
+                else{
+                    c_writer = $('<h4 style="font-family: SansSerif">' + data.username[item.fields.c_user] +'</h4>');
+                }
                 let c_text = $('<p>: ' + item.fields.c_content + '</p>')
 
                 let a = item.fields.c_user;
@@ -66,7 +72,13 @@ $(function(event){
                     let t_list = $('#c_list');
                     let c_list = $('<div class="box"></div>');
                     t_list.prepend(c_list);
-                    let c_writer = $('<h4 style="font-family: SansSerif">' + $(data)[0].writer + '</h4>'); // 작성자 네임알려주쇼
+                    let c_writer
+                    if($(data)[0].writer == $('#t_name').text()){
+                        c_writer = $('<h4 style="font-family: SansSerif; color: red"> 글쓴이 </h4>');
+                    }
+                    else{
+                        c_writer = $('<h4 style="font-family: SansSerif">' + $(data)[0].writer + '</h4>');
+                    }
                     let c_text = $('<p>: ' + $('#c_content').val() + '</p>')
                     let deleteBtn = $('<button type="button" class="primary" style="font-family: SansSerif; float: right;">삭제</button>')
                     c_list.prepend(c_text);

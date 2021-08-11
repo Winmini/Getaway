@@ -22,7 +22,6 @@ def b_list(request):
     kw = request.GET.get('kw', '')  # 검색어 for search function
     # 조회
     listing = Board.objects.all().order_by('-b_pubdate')
-
     if kw:  # 이것도 for search function
         listing = listing.filter(
             Q(b_title__icontains=kw) |  # 제목검색
@@ -33,6 +32,7 @@ def b_list(request):
     # 페이징 처리
     paginator = Paginator(listing, 10)  # 페이지당 10개씩 보여주기
     page_obj = paginator.get_page(page)
+
     # 검색 기능 넣고 Page and kw are included
     context = {'listing': page_obj, 'page': page, 'kw': kw, 'user': user_id}
     return render(request, 'getaway/list.html', context)
@@ -67,11 +67,12 @@ def b_create(request):
 def b_detail(request, board_id):
     if request.method == 'POST':
         if request.POST.get('what') == 'write_comment':
-
             print(request.POST.get('content'))
             n_c_user = User.objects.get(pk=request.POST.get('writer'))
             n_c_content = request.POST.get('content')
             board = Board.objects.get(pk=request.POST['id'])
+            board.b_comment += 1
+            board.save()
             new_comment = Comment(
                 c_user=n_c_user,
                 c_content=n_c_content,

@@ -54,7 +54,7 @@
                             <p class="card-text"></p>
                             <p class="card-text"
                                name="{{ post.id }}">글 번호 : <span id="board_id">{{ post.id }}</span><br>
-                                                    작성자 : {{ post.b_user }}<br>
+                                                    작성자 : <span id="t_name">{{ post.b_user }}</span><br>
                                                     작성일 : {{ post.b_pubdate | date:"Y년 m월 d일 h:m" }}</p>
                             <hr>
                             <h3 style="font-family: SansSerif">{{ post.b_content }}</h3>
