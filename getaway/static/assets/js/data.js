@@ -84,7 +84,7 @@ function bring_tour_with_areaCode(areaCode, sigunguCode, pageNo, serviceKey){
     xhr.onreadystatechange = function (){
         if(this.readyState == 4){
             $(this.responseText).find('item').each(function(index, item){
-                console.log($(this.responseText))
+
                 let post = $('.posts');
                 let article = $('<article></article>');
                 let image_add = $($(item).find('firstimage')[0]).text();
@@ -99,7 +99,7 @@ function bring_tour_with_areaCode(areaCode, sigunguCode, pageNo, serviceKey){
                 // console.log($(item).find('title')[0]);
                 let contentId = $($(item).find('contentid')[0]).text();
                 console.log(contentId);
-                bring_tour_detail(article, contentId);
+                bring_tour_detail(article, contentId, serviceKey);
                 pageNo++;
             })
         }
@@ -107,14 +107,29 @@ function bring_tour_with_areaCode(areaCode, sigunguCode, pageNo, serviceKey){
     xhr.send('');
 }
 
+/*
+    queryParams += '&' + encodeURIComponent('MobileOS') + '=' + 'ETC';
+    queryParams += '&' + encodeURIComponent('MobileApp') + '=' + 'TourAPI3.0_Guide';
+    queryParams += '&' + encodeURIComponent('defaultYN') + '=' + 'Y';
+    queryParams += '&' + encodeURIComponent('firstImageYN') + '=' + 'Y';
+    queryParams += '&' + encodeURIComponent('defaultYN') + '=' + 'Y';
+    queryParams += '&' + encodeURIComponent('areacodeYN') + '=' + 'Y';
+    queryParams += '&' + encodeURIComponent('catcodeYN') + '=' + 'Y';
+    queryParams += '&' + encodeURIComponent('addrinfoYN') + '=' + 'Y';
+    queryParams += '&' + encodeURIComponent('mapinfoYN') + '=' + 'Y';
+    queryParams += '&' + encodeURIComponent('overviewYN') + '=' + 'Y';
+    queryParams += '&' + encodeURIComponent('transGuideYN') + '=' + 'Y';
+* */
+
+
 
 function bring_tour_detail(article, contentId, serviceKey){
     let xhr = new XMLHttpRequest();
     let url ='http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon';
     let queryParams = '?' + encodeURIComponent('ServiceKey') + '=' + serviceKey;
+    queryParams += '&' + encodeURIComponent('contentId') + '=' + contentId;
     queryParams += '&' + encodeURIComponent('MobileOS') + '=' + 'ETC';
     queryParams += '&' + encodeURIComponent('MobileApp') + '=' + 'AppTest';
-    queryParams += '&' + encodeURIComponent('contentId') + '=' + contentId;
     queryParams += '&' + encodeURIComponent('overviewYN') + '=' + 'Y';
     xhr.open('GET', url + queryParams);
     xhr.onreadystatechange = function (){
@@ -122,8 +137,9 @@ function bring_tour_detail(article, contentId, serviceKey){
             $(this.responseText).find('item').each(function(index, item){
                 console.log(item);
                 let explain = $($(item).find('overview')[0]).text().substr(0,100);
+
                 article.append('<p> 설명: ' + explain + ' ...</p>');
-                article.append('<ul class="actions"><l1><a href="#" class="button">More</a></l1></ul>');
+                article.append('<ul class="actions" style="width: 50%;"><li><a href="#" class="button">More</a></li></ul>');
             })
         }
     }
