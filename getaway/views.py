@@ -66,7 +66,7 @@ def b_create(request):
 def b_detail(request, board_id):
     if request.method == 'POST':
         if request.POST.get('what') == 'write_comment':
-            print(request.POST.get('writer'))
+
             print(request.POST.get('content'))
             n_c_user = User.objects.get(pk=request.POST.get('writer'))
             n_c_content = request.POST.get('content')
@@ -89,7 +89,7 @@ def b_detail(request, board_id):
                 username_data[username['fields']['c_user']] = User.objects.get(pk=username['fields']['c_user']).username
             return JsonResponse({'comment': comment_data, 'username': username_data})
         elif request.POST.get('what') == 'comment_delete':
-            d_comment = Comment.objects.get(pk=request.POST['id'])
+            d_comment = Comment.objects.get(pk=request.POST.get('id'))
             d_comment.delete()
             comment = Comment.objects.select_related('c_board').filter(c_board=request.POST.get('board_id')).order_by('-c_pubdate')
             comment_data = json.loads(serialize('json', comment))
