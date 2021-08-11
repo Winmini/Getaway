@@ -34,17 +34,17 @@
                     <section id="banner">
                         <div class="content">
                             <header>
-                                <h1>Hi, I’m Editorial<br />
-                                by HTML5 UP</h1>
-                                <p>A free and fully responsive site template</p>
+                                <h1>Getaway<br />
+                                with Buddy</h1>
+                                <p style="font-family: SansSerif">여행지 선정에 어려움을 느끼신 적이 있으신가요?</p>
                             </header>
-                            <p>Aenean ornare velit lacus, ac varius enim ullamcorper eu. Proin aliquam facilisis ante interdum congue. Integer mollis, nisl amet convallis, porttitor magna ullamcorper, amet egestas mauris. Ut magna finibus nisi nec lacinia. Nam maximus erat id euismod egestas. Pellentesque sapien ac quam. Lorem ipsum dolor sit nullam.</p>
-                            <ul class="actions">
-                                <li><a href="#" class="button big">Learn More</a></li>
-                            </ul>
+                            <p style="font-family: SansSerif"> Getaway with buddy는 공공데이터포털에서 대한민국 모든 여행지를 가져와 지역만 선택하시면 랜덤하게 여행지를 보여드리고 있습니다.
+                                해당 여행지의 더보기를 클릭하시면 상세보기가 가능하며 사용자 간의 의견 소통이 가능해 보다 좋은 여행지를 빠르게 결정하실 수 있습니다!</p>
+                            <p style="font-family: SansSerif"> 회원가입을 하시면 자유게시판에서 여행지에 대해 자유롭게 게시글을 올릴 수 있으므로 추천관광지에 나오지 않은 여행지에 대한 의견 공유도 가능합니다.</p>
+
                         </div>
                         <span class="image object">
-                            <img src="" alt="" />
+                            <img src="../../static/images/main.JPG" alt="" />
                         </span>
                     </section>
 
@@ -74,44 +74,46 @@
 <!-- Sidebar ---------------------------------------------------------------------------------------------------------->
             <div id="sidebar">
                 <div class="inner">
-                    <!-- Search -->
-                    <section id="search" class="alt">
-                        <form method="post" action="#">
-                            <input type="text" name="query" id="query" placeholder="Search" />
-                        </form>
-                    </section>
                     <!-- Menu -->
+                    <br><br><br>
                     <nav id="menu">
                         <header class="major">
                             <h2>Menu</h2>
                         </header>
                         <ul>
-                            <li><a href="{% url 'getaway:home' %}">Mainpage</a></li>
-                            <li><a href="{% url 'getaway:home' %}" style="font-family: SansSerif">상세페이지?</a></li>
+                            <li><a href="{% url 'getaway:home' %}" style="font-family: SansSerif">메인페이지</a></li>
                             <li><a href="{% url 'getaway:b_list' %}" style="font-family: SansSerif">자유게시판</a></li>
-                            <li>
-                                <span class="opener">Submenu</span>
-                                <ul>
-                                    <li><a href="#">Lorem Dolor</a></li>
-                                    <li><a href="#">Ipsum Adipiscing</a></li>
-                                    <li><a href="#">Tempus Magna</a></li>
-                                    <li><a href="#">Feugiat Veroeros</a></li>
-                                </ul>
-                            </li>
                         </ul>
                     </nav>
                     <!-- Section -->
                     <section>
                         <header class="major">
-                            <h2>Get in touch</h2>
+                            <h2>Who made this?</h2>
                         </header>
-                        <p>Sed varius enim lorem ullamcorper dolore aliquam aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin sed aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-                        <ul class="contact">
-                            <li class="icon solid fa-envelope"><a href="#">information@untitled.tld</a></li>
-                            <li class="icon solid fa-phone">(000) 000-0000</li>
-                            <li class="icon solid fa-home">1234 Somewhere Road #8254<br />
-                            Nashville, TN 00000-0000</li>
-                        </ul>
+                        <article>
+                            <a href="#" class="image">
+                                <img src="../../static/images/park.png" style="width: 70%; height: 70%">
+                            </a>
+                            <p>github : Lewis911</p>
+                        </article>
+                        <article>
+                            <a href="#" class="image">
+                                <img src="../../static/images/ban.png" style="width: 70%; height: 70%">
+                            </a>
+                            <p>github : Rphabet</p>
+                        </article>
+                        <article>
+                            <a href="#" class="image">
+                                <img src="../../static/images/lee.png" style="width: 70%; height: 70%">
+                            </a>
+                            <p>github : 01stone</p>
+                        </article>
+                        <article>
+                            <a href="#" class="image">
+                                <img src="../../static/images/lim.png" style="width: 70%; height: 70%">
+                            </a>
+                            <p>github : Winmini</p>
+                        </article>
                     </section>
                 </div>
             </div>
@@ -124,7 +126,6 @@
 			<script src="../../static/assets/js/util.js"></script>
 			<script src="../../static/assets/js/main.js"></script>
             <script src="../../static/assets/js/data.js"></script>
-            <script src="../../static/assets/js/buttons.js"></script>
 
 	</body>
 </html>
