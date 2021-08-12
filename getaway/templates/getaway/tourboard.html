@@ -1,7 +1,13 @@
-{% extends 'base.html' %}
-{% block html_body %}
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>GETAWAY</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../../static/assets/css/main.css" />
 
-    <link rel="stylesheet" href="../../static/getaway/assets/css/main.css" />
+
+
     <style>
         .screen_out {display:block;overflow:hidden;position:absolute;left:-9999px;width:1px;height:1px;font-size:0;line-height:0;text-indent:-9999px}
         .wrap_content {overflow:hidden;height:330px}
@@ -14,14 +20,14 @@
         .btn_linkRoadview {background-position:0 0;}
         .btn_resetRoadview {background-position:-69px 0;}
     </style>
-
+</head>
     <body class="is-preload">
 
         <div id="wrapper">
             <div id="main">
                 <div class="inner">
                     <header id="header">
-                        <strong><p>여행지 정보</p></strong>
+                        <a href="{% url 'getaway:home' %}" class="logo" id={{ contentId }}><strong>GETAWAY</strong> with BUDDY</a>
                     </header>
 
                     <section>
@@ -165,5 +171,3 @@
         rv.setPanoId(rvResetValue.panoId);
     }
 </script>
-
-{% endblock %}

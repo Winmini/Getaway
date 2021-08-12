@@ -212,6 +212,11 @@ def home(request):
         return render(request, 'getaway/mainpage.html', {'user_id': {user}})
     return render(request, 'getaway/mainpage.html')
 
+
+def detail(request, contentId):
+    user_id = request.session.get('user')
+    return render(request, 'getaway/tourboard.html', {'contentId': contentId, 'user': user_id})
+
 # --------------------------------------- comment 뷰 함수
 
 # 아직 코멘트 삭제 버튼 기능을 만들진 않았음.

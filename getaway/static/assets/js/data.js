@@ -22,9 +22,9 @@ let area_key = {'서울': '1', '인천': '2', '대전': '3', '대구': '4', '광
 $(function (){
     // 선택지 초기화
     let serviceKey = 'lA29%2FannvhdQHnNE4mon7ZoyNq0ue6P%2FPnYQuFsfaZ7D8YedR6DOISotomyacj0u15iLaCeruqZUsGe%2F79DpRA%3D%3D';
-//    let serviceKey = 'rE%2BzSIwPU%2FdmQTVNnIRGBCcv6FWXOyrTEKBJFzviUwqs53ZPdiXDrDai8Cmc946Hzp0e0IK19jC7l5FS61TFBw%3D%3D';
-//    let serviceKey =
-
+//    let serviceKey = 'rE%2BzSIwPU%2FdmQTVNnIRGBCcv6FWXOyrTEKBJFzviUwqs53ZPdiXDrDai8Cmc946Hzp0e0IK19jC7l5FS61TFBw%3D%3D'; //
+//    let serviceKey = 'ikvqLLOyp69vvFkK1eGbmCQW0Eg9KcEEtAbgaXVRf7GVGqxh0TgoPastrL4xHJgKtyy2Ii%2F%2B5FTA0PYiBBlmBg%3D%3D';
+//    let serviceKey = '';
     let area_select = $('#area_select');
     let detail_select = $('#detail_select');
 
@@ -99,8 +99,10 @@ function bring_tour_with_areaCode(areaCode, sigunguCode, pageNo, serviceKey){
                 // console.log($(item).find('title')[0]);
                 let contentId = $($(item).find('contentid')[0]).text();
                 console.log(contentId);
-                bring_tour_detail(article, contentId, serviceKey);
-                pageNo++;
+//              bring_tour_detail(article, contentId, serviceKey);'
+                let detail_url = "{% url 'getaway:signup', " +  contentId +  "%}";
+                console.log(detail_url);
+                article.append('<ul class="actions" style="width: 50%;"><li><a href="/' + contentId + '" class="button">More</a></li></ul>');
             })
         }
     }
@@ -134,10 +136,10 @@ function bring_tour_detail(article, contentId, serviceKey){
     xhr.open('GET', url + queryParams);
     xhr.onreadystatechange = function (){
         if(this.readyState == 4){
+            console.log(this.responseText);
             $(this.responseText).find('item').each(function(index, item){
                 console.log(item);
                 let explain = $($(item).find('overview')[0]).text().substr(0,100);
-
                 article.append('<p> 설명: ' + explain + ' ...</p>');
                 article.append('<ul class="actions" style="width: 50%;"><li><a href="#" class="button">More</a></li></ul>');
             })
