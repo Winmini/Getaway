@@ -23,7 +23,7 @@
 
                     <!-- Header -->
                     <header id="header">
-                        <a href="{% url 'getaway:home' %}" class="logo" id="{{ user }}"><strong>GETAWAY</strong> with BUDDY</a>
+                        <a href="{% url 'getaway:home' %}" class="logo" id="{{ user }}"><strong>GETAWAY</strong> BUDDY</a>
                     </header>
                     <br>
                 <div>
@@ -38,13 +38,12 @@
                 </div>
                 <div>
 <!-- 게시글 제목, 목록으로 버튼 =------------------------------------------------------------------------------------------>
-{#                    <a href="{% url 'getaway:b_list' %}" style="float: right">#}
                         <button type="button"
                                 class="button"
                                 id="list_btn"
                                 style="font-family: SansSerif; float: right;"
                                 data-uri="{% url 'getaway:b_list' %}"> 목록으로 </button>
-{#                    </a>#}
+
                     <h1 style="font-family: SansSerif;">{{ post.b_title }}</h1>
                 </div>
                     <!-- Banner -->
@@ -58,7 +57,7 @@
                                                     작성일 : {{ post.b_pubdate | date:"Y년 m월 d일 h:m" }}</p>
                             <hr>
                             <h3 style="font-family: SansSerif">{{ post.b_content }}</h3>
-<!------------------------- 좋아요/수정/삭제 버튼 -->
+<!------------------------- 좋아요/수정/삭제 버튼 -------------------------------->
                             <div class="col-1">
                                 <a href="{% url 'getaway:b_like' post.id %}"
                                    data-uri="{% url 'getaway:b_detail' post.id  %}">
@@ -88,7 +87,7 @@
                             </div>
                         </div>
 
-<!-- 코멘트를 한 번 넣어보자 ---------------------------------------------------------------------------------------------->
+<!--------------------------------- 코멘트를 한 번 넣어보자 ------------------------------------------------------>
                         <div class="container">
                             <h3 style="font-family: SansSerif" id="comment_count">댓글 {{ post.b_comment }}</h3>
 <!------------------------------ 답변 등록 : form action link 달아야 함-->
@@ -105,7 +104,7 @@
                                 <br>
                                 <div id="c_list">
                                 </div>
-<!------------------------------ 등록된 답변 -->
+<!------------------------------ 등록된 답변 ------------------------------------->
 
                         </div>
                         <br><br><br>
@@ -169,5 +168,6 @@
         <script src="../../static/assets/js/main.js"></script>
         <script src="../../static/assets/js/buttons.js"></script>
         <script src="../../static/assets/js/comment_ajax.js"></script>
+
 	</body>
 </html>

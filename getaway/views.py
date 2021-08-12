@@ -26,8 +26,6 @@ def b_list(request):
         listing = listing.filter(
             Q(b_title__icontains=kw) |  # 제목검색
             Q(b_content__icontains=kw)  # | # 내용검색
-            # Q(author__username__icontains=kw) |  # 질문 글쓴이검색
-            # Q(answer__author__username__icontains=kw)  # 답변 글쓴이검색
         ).distinct()
     # 페이징 처리
     paginator = Paginator(listing, 10)  # 페이지당 10개씩 보여주기
@@ -143,6 +141,9 @@ def b_like(request, board_id):
         messages.error(request, '로그인한 유저만 좋아요를 누를 수 있습니다.')
     elif user_id == post.b_user.id:
         messages.error(request, '본인이 작성한 글은 추천할수 없습니다')
+    elif post.b_voter.filter(id=user_id).exists():
+        post.b_voter.remove(user_id)
+        messages.error(request, '좋아요가 취소 되었습니다.')
     else:
         post.b_voter.add(User.objects.get(pk=user_id))
     return redirect('getaway:b_detail', board_id)
@@ -169,7 +170,6 @@ def signup(request):
             user.save()
 
         return render(request, 'getaway/signupcomplete.html')
-
 
     if request.method == 'GET':
         return render(request, 'getaway/signup.html')
@@ -215,17 +215,8 @@ def detail(request, contentId):
     user_id = request.session.get('user')
     return render(request, 'getaway/tourboard.html', {'contentId': contentId, 'user': user_id})
 
+
 # --------------------------------------- comment 뷰 함수
-
-# 아직 코멘트 삭제 버튼 기능을 만들진 않았음.
-# def c_delete(request):
-#
-#     comment = get_object_or_404(Comment, id=request.GET['comment_id'])
-#     comment.delete()
-#     return JsonResponse({
-#         'code': '200'   # code 200의 의미는 삭제성공의 의미로 가정
-#     }, json_dumps_params={'ensure_ascii': True})
-
 
 def c_create(request, board_id):
     filled_form = CommentForm(request.POST)
