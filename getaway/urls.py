@@ -16,7 +16,6 @@ urlpatterns = [
     path('detail/remove/<int:board_id>/', views.b_remove, name='b_remove'),
     # 게시글 추천
     path('detail/<int:board_id>/like/', views.b_like, name='b_like'),
-
     # 회원가입/ 로그인/ 로그아웃
     path('signup/', views.signup, name='signup'),
     path('login/', views.login, name='login'),

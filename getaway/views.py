@@ -26,8 +26,6 @@ def b_list(request):
         listing = listing.filter(
             Q(b_title__icontains=kw) |  # 제목검색
             Q(b_content__icontains=kw)  # | # 내용검색
-            # Q(author__username__icontains=kw) |  # 질문 글쓴이검색
-            # Q(answer__author__username__icontains=kw)  # 답변 글쓴이검색
         ).distinct()
     # 페이징 처리
     paginator = Paginator(listing, 10)  # 페이지당 10개씩 보여주기
@@ -149,31 +147,6 @@ def b_like(request, board_id):
     else:
         post.b_voter.add(User.objects.get(pk=user_id))
     return redirect('getaway:b_detail', board_id)
-
-# 밑에는 좋아요 Ajax 처리를 위한 함수... 왜실패했는지 모르겠다 주륵...
-# def b_like(request, board_id):
-#     """
-#     좋아요 (추천) 기능 view 함수
-#     """
-#     user_id = request.session.get('user')
-#     post = get_object_or_404(Board, pk=board_id)
-#     if user_id is None:
-#         messages.error(request, '로그인한 유저만 좋아요를 누를 수 있습니다.')
-#         message = '로그인한 유저만 좋아요를 누를 수 있어요!'
-#     elif user_id == post.b_user.id:
-#         messages.error(request, '본인이 작성한 글은 추천할수 없습니다')
-#         message = '본인 글을 직접 추천하는건 안됩니다'
-#     elif post.b_voter.filter(id=user_id).exists():
-#         post.b_voter.remove(user_id)
-#         messages.error(request, '좋아요가 취소 되었습니다.')
-#         message = '좋아요가 취소 되었어요'
-#     else:
-#         post.b_voter.add(User.objects.get(pk=user_id))
-#         message = '해당 게시글 좋아요를 눌렀어요'
-#
-#     context = {'likes_count': post.count_like_user(),
-#                'message': message}
-#     return HttpResponse(json.dumps(context), content_type="application/json")
 
 
 # ----------------------------- 로긴

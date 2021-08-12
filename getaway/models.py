@@ -9,10 +9,10 @@ class Board(models.Model):
     b_comment = models.IntegerField(default=0)  # 게시판 댓글 개수
     b_pubdate = models.DateTimeField(auto_now=True)  # 게시판 게시글 업로드 날짜
     b_user = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='user_board')
-    b_voter = models.ManyToManyField(User, related_name='voter_board')  # 추천인 추가, Many-To-Many 를 쓴 이유는 중복 좋아요 클릭 방지
+    b_voter = models.ManyToManyField(User, related_name='voter_board', blank=True)  # 추천인 추가, Many-To-Many 중복 좋아요 방지
 
-    def count_like_user(self):  # total user count
-        return self.b_like.count()
+    def like_count(self):  # total user count
+        return self.b_voter.count()
 
     def __str__(self):
         return self.b_title
