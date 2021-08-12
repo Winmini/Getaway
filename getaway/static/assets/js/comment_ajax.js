@@ -59,6 +59,7 @@ $(function(event){
             alert('로그인한 유저만 댓글을 달 수 있습니다.')
         }
         else {
+
             $.ajax({
                 type: 'POST',
                 url: document.location.href,
@@ -81,6 +82,8 @@ $(function(event){
                     }
                     let c_text = $('<p>: ' + $('#c_content').val() + '</p>')
                     let deleteBtn = $('<button type="button" class="primary" style="font-family: SansSerif; float: right;">삭제</button>')
+                    let count = Number($('#comment_count').text().substring(3,)) + 1;
+                    $('#comment_count').text('댓글 '+ count);
                     c_list.prepend(c_text);
                     c_list.prepend(c_writer);
                     c_list.prepend(deleteBtn);
@@ -90,9 +93,12 @@ $(function(event){
                             url: document.location.href,
                             data: {
                                 'what': 'comment_delete',
+                                'board_id': $('#board_id').text(),
                                 'id': data.comment[0].pk
                             },
                             success: function (data) {
+                                count = Number($('#comment_count').text().substring(3,)) - 1;
+                                $('#comment_count').text('댓글 '+ count);
                                 c_list.remove();
                             },
                             error: function () {
