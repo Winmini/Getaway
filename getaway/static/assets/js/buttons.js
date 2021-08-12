@@ -39,24 +39,10 @@ $(function(event) {
         location.href = $(this).attr('data-uri');
     });
 
-    // 추천 컨펌 버튼 -- 미완성 version
+    // 추천 컨펌 버튼 -- 딱히 필요가 없어서 주석 처리.
     // $(".recommend").on('click', function() {
     //     if(confirm("정말로 추천하시겠습니까?")) {
     //         location.href = $(this).attr('data-uri');
     //     }
     // });
 });
-
-//
-// <a href="{% url 'getaway:b_modify' post.id %}">
-//     <button id="mod_btn"
-//             type="button"
-//             className="button"
-//             style="font-family: SansSerif"> 수정
-//     </button>
-// </a>
-
-
-// $("#modify_btn").on('click', function() {
-//    document.location.href = '/getaway/modify/'
-// });

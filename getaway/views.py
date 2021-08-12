@@ -142,6 +142,9 @@ def b_like(request, board_id):
         messages.error(request, '로그인한 유저만 좋아요를 누를 수 있습니다.')
     elif user_id == post.b_user.id:
         messages.error(request, '본인이 작성한 글은 추천할수 없습니다')
+    elif post.b_voter.filter(id=user_id).exists():
+        post.b_voter.remove(user_id)
+        messages.error(request, '좋아요가 취소 되었습니다.')
     else:
         post.b_voter.add(User.objects.get(pk=user_id))
     return redirect('getaway:b_detail', board_id)
