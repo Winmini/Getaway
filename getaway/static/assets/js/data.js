@@ -84,64 +84,17 @@ function bring_tour_with_areaCode(areaCode, sigunguCode, pageNo, serviceKey){
     xhr.onreadystatechange = function (){
         if(this.readyState == 4){
             $(this.responseText).find('item').each(function(index, item){
-
                 let post = $('.posts');
                 let article = $('<article></article>');
                 let image_add = $($(item).find('firstimage')[0]).text();
                 let t_title = $($(item).find('title')[0]).text();
                 let t_addr = $($(item).find('addr1')[0]).text();
-                // console.log(item);
+                let contentId = $($(item).find('contentid')[0]).text();
                 post.append(article);
-                article.append('<a href="#" class="image"><img src="' + image_add +'"/></a>');
+                article.append('<a href="'+ contentId + '" class="image"><img src="' + image_add +'"/></a>');
                 article.append('<h3>' + t_title + '</h3>');
                 article.append('<p> 위치: '+ t_addr + ' </p>');
-
-                // console.log($(item).find('title')[0]);
-                let contentId = $($(item).find('contentid')[0]).text();
-                console.log(contentId);
-//              bring_tour_detail(article, contentId, serviceKey);'
-                let detail_url = "{% url 'getaway:signup', " +  contentId +  "%}";
-                console.log(detail_url);
                 article.append('<ul class="actions" style="width: 50%;"><li><a href="/' + contentId + '" class="button">More</a></li></ul>');
-            })
-        }
-    }
-    xhr.send('');
-}
-
-/*
-    queryParams += '&' + encodeURIComponent('MobileOS') + '=' + 'ETC';
-    queryParams += '&' + encodeURIComponent('MobileApp') + '=' + 'TourAPI3.0_Guide';
-    queryParams += '&' + encodeURIComponent('defaultYN') + '=' + 'Y';
-    queryParams += '&' + encodeURIComponent('firstImageYN') + '=' + 'Y';
-    queryParams += '&' + encodeURIComponent('defaultYN') + '=' + 'Y';
-    queryParams += '&' + encodeURIComponent('areacodeYN') + '=' + 'Y';
-    queryParams += '&' + encodeURIComponent('catcodeYN') + '=' + 'Y';
-    queryParams += '&' + encodeURIComponent('addrinfoYN') + '=' + 'Y';
-    queryParams += '&' + encodeURIComponent('mapinfoYN') + '=' + 'Y';
-    queryParams += '&' + encodeURIComponent('overviewYN') + '=' + 'Y';
-    queryParams += '&' + encodeURIComponent('transGuideYN') + '=' + 'Y';
-* */
-
-
-
-function bring_tour_detail(article, contentId, serviceKey){
-    let xhr = new XMLHttpRequest();
-    let url ='http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon';
-    let queryParams = '?' + encodeURIComponent('ServiceKey') + '=' + serviceKey;
-    queryParams += '&' + encodeURIComponent('contentId') + '=' + contentId;
-    queryParams += '&' + encodeURIComponent('MobileOS') + '=' + 'ETC';
-    queryParams += '&' + encodeURIComponent('MobileApp') + '=' + 'AppTest';
-    queryParams += '&' + encodeURIComponent('overviewYN') + '=' + 'Y';
-    xhr.open('GET', url + queryParams);
-    xhr.onreadystatechange = function (){
-        if(this.readyState == 4){
-            console.log(this.responseText);
-            $(this.responseText).find('item').each(function(index, item){
-                console.log(item);
-                let explain = $($(item).find('overview')[0]).text().substr(0,100);
-                article.append('<p> 설명: ' + explain + ' ...</p>');
-                article.append('<ul class="actions" style="width: 50%;"><li><a href="#" class="button">More</a></li></ul>');
             })
         }
     }
