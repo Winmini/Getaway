@@ -49,6 +49,9 @@
                                     <input type="checkbox" id="demo-ad" name="demo-ad">
                                     <label for="demo-ad">(선택) 광고성 메일 수신 동의</label>
                                 </div>
+                               {% if error %}
+                                    <strong style="color: red"> {{ error }} </strong>
+                                {% endif %}
                                 <!-- SIGNUP 버튼 -->
                                 <ul class="actions" style="float: right;">
                                     <li>

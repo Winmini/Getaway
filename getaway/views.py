@@ -21,7 +21,7 @@ def b_list(request):
     page = request.GET.get('page', 1)  # 페이지
     kw = request.GET.get('kw', '')  # 검색어 for search function
     # 조회
-    listing = Board.objects.all().order_by('-b_pubdate')
+    listing = Board.objects.all().order_by('-id')
     if kw:  # 이것도 for search function
         listing = listing.filter(
             Q(b_title__icontains=kw) |  # 제목검색
@@ -152,15 +152,16 @@ def b_like(request, board_id):
 # ----------------------------- 로긴
 def signup(request):
     if request.method == 'POST':
-        error = {}
         email = request.POST.get('email', None)
         username = request.POST.get('username', None)
         password = request.POST.get('password1', None)
         re_password = request.POST.get('password2', None)
         if not (email and username and password and re_password):
             error = '모든 값을 입력해야 합니다.'
+            return render(request, 'getaway/signup.html', {'error': error})
         elif password != re_password:
             error = '비밀번호가 일치하지 않습니다.'
+            return render(request, 'getaway/signup.html', {'error': error})
         else:
             user = User.objects.create_user(
                 username=request.POST['username'],
@@ -168,8 +169,7 @@ def signup(request):
                 email=request.POST['email'],
                 )
             user.save()
-
-        return render(request, 'getaway/signupcomplete.html')
+            return render(request, 'getaway/signupcomplete.html')
 
     if request.method == 'GET':
         return render(request, 'getaway/signup.html')
@@ -191,7 +191,7 @@ def login(request):
             else:
                 if check_password(password, user.password):
                     request.session['user'] = user.id
-                    return redirect('getaway:b_list')  # 메인페이지
+                    return redirect('/')  # 메인페이지
                 else:
                     error = '비밀번호가 틀렸습니다.'
         return render(request, 'getaway/login.html', {'error': error})
