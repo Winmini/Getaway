@@ -21,7 +21,7 @@ def b_list(request):
     page = request.GET.get('page', 1)  # 페이지
     kw = request.GET.get('kw', '')  # 검색어 for search function
     # 조회
-    listing = Board.objects.all().order_by('-b_pubdate')
+    listing = Board.objects.all().order_by('-id')
     if kw:  # 이것도 for search function
         listing = listing.filter(
             Q(b_title__icontains=kw) |  # 제목검색
