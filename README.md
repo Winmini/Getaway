@@ -18,15 +18,15 @@
 
 ## 메인 페이지
 
-![메인페이지](images/main.png){width=50%}
+![메인페이지](images/main.png)
 
 ## 추천 관광지
 
-![추천 관광지](images/rec_spots.png){width=50%}
+![추천 관광지](images/rec_spots.png)
 
 ​      **`MORE`** 버튼을 꾹 누른다면:
 
-![추천 관광지 상세정보](images/rec_spots_detail.png){width=50%}
+![추천 관광지 상세정보](images/rec_spots_detail.png)
 
 Kakao 지도 api를 이용해서 지도를 구현해보았습니다. 🗺 
 
@@ -38,7 +38,7 @@ Kakao 지도 api를 이용해서 지도를 구현해보았습니다. 🗺
 
 이렇게 생겼답니다ㅎㅎ
 
-![자유게시판](images/board.png){width=50%}
+![자유게시판](images/board.png)
 
 검색과 page 처리는 제가 했답니다ㅎㅎ (제일 쉬운거였음...) (`Rphabet`)
 
@@ -50,11 +50,11 @@ Kakao 지도 api를 이용해서 지도를 구현해보았습니다. 🗺
 
 우측 상단에 <u>로그인</u> 버튼을 눌러주시죠!
 
-![로그인](images/login.png){width=50%}
+![로그인](images/login.png)
 
 이렇게 화면이 떴다면, 회원가입을 꾹 눌러주세요.
 
-![회원가입중..](images/signup.png){width=50%}
+![회원가입중..](images/signup.png)
 
 이름은 홍길동이 좋겠네요. 
 
@@ -62,27 +62,27 @@ Kakao 지도 api를 이용해서 지도를 구현해보았습니다. 🗺
 
 회원가입 끄읏.
 
-![회원가입 끄읏.](images/aftersignup.png){width=50%}
+![회원가입 끄읏.](images/aftersignup.png)
 
 다시 자유게시판으로 돌아가면 글쓰기 버튼이 새로 생겼는데요ㅎㅎ
 
 한번 눌러보시죠.
 
-![글쓰기 버튼이 생겼다!](images/writing.png){width=50%}
+![글쓰기 버튼이 생겼다!](images/writing.png)
 
 새글 작성중...
 
-![새글 작성중..](images/create_post.png){width=50%}
+![새글 작성중..](images/create_post.png)
 
 닉네임이 홍길동인 만큼, 대한민국 정반대에 있는 아프리카 대륙의 이집트로 가보겠습니다ㅎㅎ
 
 이제 등록 버튼을 꾹 눌러준다면...
 
-![방금 막 등록된 새글을 보고 계십니다.](images/new_posting.png){width=50%}
+![방금 막 등록된 새글을 보고 계십니다.](images/new_posting.png)
 
 ㅎㅎ 제가 쓴 첫 글인만큼 **좋아요**를 눌러줘야겠네요. 😝 
 
-![좋아요 실패... 😩](images/self_like_not_possible.png){width=50%}
+![좋아요 실패... 😩](images/self_like_not_possible.png)
 
 좋아요 실패... 😩
 
