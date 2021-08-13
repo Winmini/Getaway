@@ -1,4 +1,4 @@
-# GETAWAY BUDDY
+# GETAWAY BUDDY - first Team Project
 
 ---
 
