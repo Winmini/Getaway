@@ -6,7 +6,7 @@ app_name = 'getaway'   # set name space
 urlpatterns = [
     # http://localhost:8000
     path('', views.home, name='home'),
-    path('<int:contentId>/', views.detail, name='detail'),
+    path('<int:contentId>/', views.tour_detail, name='detail'),
     # http://localhost:8000/list
     path('list/', views.b_list, name='b_list'),
     # http://localhost:8000/list/create

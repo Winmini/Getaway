@@ -4,6 +4,52 @@ $(function (){
     console.log(contentId);
     let article = $('#start_info');
     bring_tour_detail(article, contentId, serviceKey,);
+    let login_id = $('#login_id').text();
+    console.log(login_id);
+    $('#btn_like').on('click', function(event){
+        if (login_id == ""){
+            alert('로그인한 사람만 누를 수 있습니다.');
+        }
+        else {
+            $.ajax({
+                type: 'POST',
+                url: document.location.href,
+                data: {
+                    'what': 'like',
+                    'user': login_id,
+                },
+                success: function (data) {
+                    $('#btn_like').attr('value', "좋아요 " + data['like']);
+                    console.log(data['like']);
+                },
+                error: function () {
+                    alert('좋아요 실패');
+                }
+            })
+        }
+    })
+    $('#btn_dislike').on('click', function(event){
+        if (login_id == ""){
+            alert('로그인한 사람만 누를 수 있습니다.');
+        }
+        else{
+            $.ajax({
+                type: 'POST',
+                url: document.location.href,
+                data: {
+                    'what': 'dis',
+                    'user': login_id,
+                },
+                success: function(data){
+                     $('#btn_dislike').attr('value', "싫어요 " + data['dis']);
+                },
+                error: function(){
+                    alert('싫어요 실패');
+                }
+            })
+        }
+
+    })
 })
 
 

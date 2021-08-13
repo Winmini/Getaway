@@ -31,6 +31,8 @@ class Comment(models.Model):
 
 class Tour(models.Model):
     t_name = models.CharField(max_length=50)
+    t_like = models.IntegerField(default=0)
+    t_dis = models.IntegerField(default=0)
 
     def __str__(self):
         return self.t_name
@@ -47,12 +49,12 @@ class TourComment(models.Model):
 
 
 # 이름을 임시로 DefUser 로 바꿈. 장고 고유 User 랑 겹치길래...
-class DefUser(models.Model):
-    user_name = models.CharField(max_length=20)
-    user_password = models.CharField(max_length=20)
-    user_email = models.EmailField(max_length=40)
-    user_phone = models.IntegerField()
-    user_created = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.user_name
+# class DefUser(models.Model):
+#     user_name = models.CharField(max_length=20)
+#     user_password = models.CharField(max_length=20)
+#     user_email = models.EmailField(max_length=40)
+#     user_phone = models.IntegerField()
+#     user_created = models.DateTimeField(auto_now=True)
+#
+#     def __str__(self):
+#         return self.user_name

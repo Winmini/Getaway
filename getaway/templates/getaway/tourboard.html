@@ -37,7 +37,16 @@
                     <!-- Header -->
                     <header id="header">
                         <a href="{% url 'getaway:home' %}" class="logo" id="{{ contentId }}"><strong>GETAWAY</strong> with BUDDY</a>
+
                     </header>
+                             <div class="logout_div" style="float: right;">
+                                    <div style="float: right"> </div>
+                                    {% if user != 'None' %}
+                                         <div style="float: right" id="login_id">{{ user }}</div>
+                                    {% else %}
+                                        <a style="float: right" href="{% url 'getaway:login' %}"><span>로그인</span></a>
+                                    {% endif %}
+                             </div>
                     <section id="start_info">
 <!-- 여행지 상세 페이지 -------------------------------------------------------------------------------------------------->
 
@@ -68,8 +77,8 @@
                         </div>
 <!------------------------- 여행지 상세 페이지 : 좋아요, 싫어요 버튼-->
                         <div style="float: right">
-                            <span><input type="button" class="button primary" style="font-family: SansSerif" id="btn_like" value="좋아요"></span> <!-- 좋아요 버튼 -->
-                            <span><input type="button" class="button" style="font-family: SansSerif" id="btn_dislike" value="싫어요"></span> <!-- 싫어요 버튼 -->
+                            <span><input type="button" class="button primary" style="font-family: SansSerif" id="btn_like" value="좋아요 {{ like }}"></span> <!-- 좋아요 버튼 -->
+                            <span><input type="button" class="button" style="font-family: SansSerif" id="btn_dislike" value="싫어요 {{ dis }}"></span> <!-- 싫어요 버튼 -->
                         </div>
                         <br><br>
                     </section>

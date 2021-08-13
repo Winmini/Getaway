@@ -18,5 +18,4 @@ class CommentAdmin(admin.ModelAdmin):
 admin.site.register(models.Board)
 admin.site.register(models.Tour)
 admin.site.register(models.TourComment)
-admin.site.register(models.DefUser)
 admin.site.register(models.Comment, CommentAdmin)

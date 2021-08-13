@@ -211,9 +211,47 @@ def home(request):
     return render(request, 'getaway/mainpage.html')
 
 
-def detail(request, contentId):
-    user_id = request.session.get('user')
-    return render(request, 'getaway/tourboard.html', {'contentId': contentId, 'user': user_id})
+@csrf_exempt
+def tour_detail(request, contentId):
+    if request.method == 'POST':
+        try:
+            Tour.objects.get(t_name=contentId)
+        except Tour.DoesNotExist:
+            tour = Tour.objects.create(t_name=contentId)
+            if request.POST.get('what') == 'like':
+                tour.t_like += 1
+                tour.save()
+            if request.POST.get('what') == 'dis':
+                tour.t_dis += 1
+                tour.save()
+        else:
+            tour = Tour.objects.get(t_name=contentId)
+            if request.POST.get('what') == 'like':
+                tour.t_like += 1
+                tour.save()
+            if request.POST.get('what') == 'dis':
+                tour.t_dis += 1
+                tour.save()
+        return JsonResponse({'like': tour.t_like, 'dis': tour.t_dis})
+
+    if request.method == 'GET':
+        try:
+            User.objects.get(pk=request.session.get('user'))
+        except User.DoesNotExist:
+            user = 'None'
+        else:
+            user = User.objects.get(pk=request.session.get('user'))
+            print(user)
+
+        try:
+            tour = Tour.objects.get(t_name=contentId)
+        except Tour.DoesNotExist:
+            like = 0
+            dis = 0
+        else:
+            like = tour.t_like
+            dis = tour.t_dis
+        return render(request, 'getaway/tourboard.html', {'contentId': contentId, 'user': user, 'like': like, 'dis': dis})
 
 
 # --------------------------------------- comment 뷰 함수
