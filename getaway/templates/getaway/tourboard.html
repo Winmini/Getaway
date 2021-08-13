@@ -36,13 +36,7 @@
 
                     <!-- Header -->
                     <header id="header">
-<<<<<<< HEAD
-                        <a href="{% url 'getaway:home' %}" class="logo" id="{{ contentId }}"><strong>GETAWAY</strong> with BUDDY</a>
-
-=======
                         <a href="{% url 'getaway:home' %}" class="logo" id="{{ contentId }}"><strong>GETAWAY</strong> BUDDY</a>
->>>>>>> 53e0c23aa6bea937d33372a34d6ba07c230cb665
-                    </header>
                              <div class="logout_div" style="float: right;">
                                     <div style="float: right"> </div>
                                     {% if user != 'None' %}
@@ -51,6 +45,8 @@
                                         <a style="float: right" href="{% url 'getaway:login' %}"><span>로그인</span></a>
                                     {% endif %}
                              </div>
+                    </header>
+
                     <section id="start_info">
 <!-- 여행지 상세 페이지 -------------------------------------------------------------------------------------------------->
 
